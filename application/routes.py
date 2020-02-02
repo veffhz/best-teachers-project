@@ -48,26 +48,19 @@ def get_profile(teacher_id):
 
 @app.route('/request/')
 def get_request():
-    return render_template('request.html', goals=goals)
+    form = RequestForm()
+    return render_template('request.html', goals=goals, form=form)
 
 
 @app.route('/request_done/', methods=['POST'])
 def send_request():
-    client_name = request.form.get("clientName")
-    client_phone = request.form.get("clientPhone")
-    goal_code = request.form.get("goal")
-    goal = goals[goal_code]
-    time = request.form.get("time")
-    request_data = {
-        'client_name': client_name,
-        'client_phone': client_phone,
-        'goal_desc': goal['desc'],
-        'time': time
-    }
-    new_request = Request(name=client_name, phone=client_phone, goal=goal['desc'], time=time)
+    new_request = Request()
+    form = RequestForm(obj=new_request)
+    form.populate_obj(new_request)
     db.session.add(new_request)
     db.session.commit()
-    return render_template('request_done.html', request_data=request_data)
+    new_request.goal = goals[new_request.goal]['desc']
+    return render_template('request_done.html', request_data=new_request)
 
 
 @app.route('/booking/<int:teacher_id>/')
