@@ -1,5 +1,3 @@
-import json
-import pathlib
 from collections import defaultdict, OrderedDict
 
 days_of_week = OrderedDict({
@@ -33,30 +31,3 @@ def grouped_by_hours(days):
         for hour, is_accessible in days[day_of_week].items():
             by_hours[hour].update({day_of_week: is_accessible})
     return by_hours
-
-
-def save_data(file, data):
-    old_data = read_json_data(file)
-    if old_data and isinstance(old_data, list):
-        old_data.append(data)
-        write_json_data(file, old_data)
-    else:
-        write_json_data(file, [data])
-
-
-def write_json_data(json_file, data):
-    path = pathlib.Path(__file__).parent / json_file
-    booking_data_json = json.dumps(data, ensure_ascii=False)
-    path.write_text(booking_data_json)
-
-
-def read_json_data(json_file):
-    path = pathlib.Path(__file__).parent / json_file
-    if path.exists():
-        return json.loads(path.read_text())
-
-
-def read_to_dict_json_data(json_file, key):
-    items = read_json_data(json_file)
-    if items:
-        return {item[key]: item for item in items}

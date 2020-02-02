@@ -2,9 +2,9 @@ from werkzeug import exceptions
 from flask import render_template, request
 from flask import current_app as app
 
-from application.models import Teacher
+from application.models import db
+from application.models import Teacher, Booking, Request
 
-from application.data_helper import save_data
 from application.data_helper import goals, days_of_week
 from application.data_helper import grouped_by_hours
 
@@ -63,7 +63,9 @@ def send_request():
         'goal_desc': goal['desc'],
         'time': time
     }
-    save_data(app.config.get('REQUEST_FILE'), request_data)
+    new_request = Request(name=client_name, phone=client_phone, goal=goal['desc'], time=time)
+    db.session.add(new_request)
+    db.session.commit()
     return render_template('request_done.html', request_data=request_data)
 
 
@@ -84,17 +86,18 @@ def get_booking(teacher_id):
 def send_booking():
     client_name = request.form.get("clientName")
     client_phone = request.form.get("clientPhone")
-    booking_day = request.form.get("bookingDay")
-    booking_hour = request.form.get("bookingHour")
-    booking_teacher = request.form.get("bookingTeacher")
+    day = request.form.get("bookingDay")
+    hour = request.form.get("bookingHour")
+    teacher_id = request.form.get("bookingTeacher")
     booking_data = {
         'client_name': client_name,
         'client_phone': client_phone,
-        'booking_day': booking_day,
-        'booking_hour': booking_hour,
-        'booking_teacher': booking_teacher
+        'day': day,
+        'hour': hour
     }
-    save_data(app.config.get('BOOKING_FILE'), booking_data)
+    new_booking = Booking(name=client_name, phone=client_phone, day=day, hour=hour, teacher_id=teacher_id)
+    db.session.add(new_booking)
+    db.session.commit()
     return render_template('booking_done.html', booking_data=booking_data)
 
 
