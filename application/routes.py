@@ -4,6 +4,7 @@ from flask import current_app as app
 
 from application.models import db
 from application.models import Teacher, Booking, Request
+from application.forms import BookingForm, RequestForm
 
 from application.data_helper import goals, days_of_week
 from application.data_helper import grouped_by_hours
@@ -79,26 +80,18 @@ def get_booking(teacher_id):
         'day': booking_day['full_ver'],
         'hour': booking_hour
     }
-    return render_template('booking.html', booking_data=booking_data)
+    form = BookingForm()
+    return render_template('booking.html', booking_data=booking_data, form=form)
 
 
 @app.route('/booking_done/', methods=['POST'])
 def send_booking():
-    client_name = request.form.get("clientName")
-    client_phone = request.form.get("clientPhone")
-    day = request.form.get("bookingDay")
-    hour = request.form.get("bookingHour")
-    teacher_id = request.form.get("bookingTeacher")
-    booking_data = {
-        'client_name': client_name,
-        'client_phone': client_phone,
-        'day': day,
-        'hour': hour
-    }
-    new_booking = Booking(name=client_name, phone=client_phone, day=day, hour=hour, teacher_id=teacher_id)
+    new_booking = Booking()
+    form = BookingForm(obj=new_booking)
+    form.populate_obj(new_booking)
     db.session.add(new_booking)
     db.session.commit()
-    return render_template('booking_done.html', booking_data=booking_data)
+    return render_template('booking_done.html', booking_data=new_booking)
 
 
 @app.errorhandler(exceptions.NotFound)

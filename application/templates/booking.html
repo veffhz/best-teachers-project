@@ -5,6 +5,7 @@
     <div class="row mt-5">
         <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
             <form action="{{ url_for('send_booking') }}" class="card mb-3" method="post">
+                {{ form.csrf_token }}
                 <div class="card-body text-center pt-5">
                     <img src="{{ booking_data.teacher.picture }}" class="mb-3" width="95" alt="">
                     <h2 class="h5 card-title mt-2 mb-2">{{ booking_data.teacher.name }}</h2>
@@ -13,16 +14,18 @@
                 </div>
                 <hr/>
                 <div class="card-body mx-3">
-                    <label class="mb-1 mt-2" for="clientName">Вас зовут</label>
-                    <input class="form-control" type="text" id="clientName" name="clientName" placeholder="Фамилия Имя" required>
-                    <label class="mb-1 mt-2" for="clientPhone">Ваш телефон</label>
-                    <input class="form-control" type="tel" id="clientPhone" name="clientPhone" required>
+                    {{ form.name.label(text='Вас зовут', class='mb-1 mt-2') }}
+                    {{ form.name(placeholder='Фамилия Имя', class='form-control') }}
 
-                    <input name="bookingDay" type="hidden" value="{{ booking_data.day }}">
-                    <input name="bookingHour" type="hidden" value="{{ booking_data.hour }}">
-                    <input name="bookingTeacher" type="hidden" value="{{ booking_data.teacher.id }}">
+                    {{ form.phone.label(text='Ваш телефон', class='mb-1 mt-2') }}
+                    {{ form.phone(type='tel', class='form-control') }}
 
-                    <input type="submit" class="btn btn-primary btn-block mt-4" value="Записаться на пробный урок">
+                    {{ form.day(value=booking_data.day) }}
+                    {{ form.hour(value=booking_data.hour) }}
+                    {{ form.teacher_id(value=booking_data.teacher.id) }}
+
+                    {{ form.submit(value='Записаться на пробный урок', class='btn btn-primary btn-block mt-4') }}
+
                 </div>
             </form>
         </div>
