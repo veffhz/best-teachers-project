@@ -10,7 +10,7 @@ def create_app(config_class=Config):
 
     with app.app_context():
         from . import routes, forms
-        from .models import db, Teacher
+        from .models import db
         db.init_app(app)
         migrate = Migrate()
         migrate.init_app(app, db)

@@ -6,9 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 class Config:
     DATA_PATH = 'data'
-    TEACHERS_FILE = f'{DATA_PATH}/teachers.json'
     BOOKING_FILE = f'{DATA_PATH}/booking.json'
-    GOALS_FILE = f'{DATA_PATH}/goals.json'
     REQUEST_FILE = f'{DATA_PATH}/request.json'
 
     DB_FILE = BASE_DIR.joinpath('application.db').absolute()

@@ -2,42 +2,40 @@ from werkzeug import exceptions
 from flask import render_template, request
 from flask import current_app as app
 
+from application.models import Teacher
+
 from application.data_helper import save_data
-from application.data_helper import teachers, goals, days_of_week
-from application.data_helper import random_limit, grouped_by_hours
+from application.data_helper import goals, days_of_week
+from application.data_helper import grouped_by_hours
 
 
 @app.route('/')
 def main():
-    random_teachers = random_limit(teachers, 6)
-    return render_template('index.html', teachers=random_teachers,
+    teachers = Teacher.query.limit(6).all()
+    return render_template('index.html', teachers=teachers,
                            goals=goals)
 
 
 @app.route('/all/')
 def get_all_teachers():
-    return render_template('index.html', teachers=teachers.items(),
+    teachers = Teacher.query.all()
+    return render_template('index.html', teachers=teachers,
                            goals=goals)
 
 
 @app.route('/goals/<goal_code>/')
 def get_goal(goal_code):
     goal = goals[goal_code]
-    filtered = {
-        teacher_id: teacher for teacher_id, teacher in teachers.items()
-        if goal_code in teacher['goals']
-    }
-    sorted_teachers = sorted(filtered.items(),
-                             key=lambda x: x[1]['rating'], reverse=True)
-    return render_template('goal.html', goal=goal, teachers=sorted_teachers)
+    teachers = Teacher.query.filter(Teacher._goals.contains(goal_code)).order_by(Teacher.rating.desc())
+    return render_template('goal.html', goal=goal, teachers=teachers)
 
 
 @app.route('/profiles/<int:teacher_id>/')
 def get_profile(teacher_id):
-    teacher = teachers.get(teacher_id)
-    grouped_days = grouped_by_hours(teacher['free'])
+    teacher = Teacher.query.get(teacher_id)
+    grouped_days = grouped_by_hours(teacher.free)
     goals_by_codes = [goal['desc'] for code, goal in goals.items()
-                      if code in teacher['goals']]
+                      if code in teacher.goals]
     profile = {
         'teacher': teacher,
         'goals': goals_by_codes,
@@ -71,7 +69,7 @@ def send_request():
 
 @app.route('/booking/<int:teacher_id>/')
 def get_booking(teacher_id):
-    teacher = teachers.get(teacher_id)
+    teacher = Teacher.query.get(teacher_id)
     booking_day = days_of_week[request.args.get('day')]
     booking_hour = request.args.get('hour')
     booking_data = {

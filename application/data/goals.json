@@ -1,6 +1,0 @@
-{
-  "travel": {"desc": "для путешествий", "icon": "\u26F1"},
-  "study": {"desc": "для учебы", "icon": "\uD83C\uDFEB"},
-  "work": {"desc": "для работы", "icon": "\uD83C\uDFE2"},
-  "relocate": {"desc": "для переезда", "icon": "\uD83D\uDE9C"}
-}

@@ -1,9 +1,6 @@
 import json
-import random
 import pathlib
 from collections import defaultdict, OrderedDict
-
-from flask import current_app as app
 
 days_of_week = OrderedDict({
     "mon": {"short_ver": "Пн",
@@ -22,11 +19,12 @@ days_of_week = OrderedDict({
             "full_ver": "Воскресенье"}
 })
 
-
-def random_limit(dictionary, quantity):
-    if len(dictionary) < quantity:
-        return random.sample(dictionary.items(), len(dictionary))
-    return random.sample(dictionary.items(), quantity)
+goals = OrderedDict({
+    "travel": {"desc": "для путешествий", "icon": "⛱"},
+    "study": {"desc": "для учебы", "icon": "🏫"},
+    "work": {"desc": "для работы", "icon": "🏢"},
+    "relocate": {"desc": "для переезда", "icon": "🚜"}
+})
 
 
 def grouped_by_hours(days):
@@ -62,7 +60,3 @@ def read_to_dict_json_data(json_file, key):
     items = read_json_data(json_file)
     if items:
         return {item[key]: item for item in items}
-
-
-teachers = read_to_dict_json_data(app.config.get('TEACHERS_FILE'), 'id') or {}
-goals = read_json_data(app.config.get('GOALS_FILE')) or {}
