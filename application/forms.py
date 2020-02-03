@@ -17,8 +17,8 @@ class BookingForm(FlaskForm):
 class RequestForm(FlaskForm):
     name = StringField(validators=[InputRequired()])
     phone = StringField(validators=[InputRequired()])
-    goal = RadioField(choices=[(goal_code, goal['desc'].capitalize()
-                                ) for goal_code, goal in goals.items()], default='travel')
+    goal = RadioField(choices=[(goal_code, goal['desc'].capitalize())
+                               for goal_code, goal in goals.items()], default='travel')
 
     time = RadioField(choices=[('1-2', '1-2 часа в неделю'),
                                ('3-5', '3-5 часов в неделю'),
