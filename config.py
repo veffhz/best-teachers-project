@@ -5,20 +5,17 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Config:
-    DATA_PATH = 'data'
-    BOOKING_FILE = f'{DATA_PATH}/booking.json'
-    REQUEST_FILE = f'{DATA_PATH}/request.json'
-
+    DEBUG = False
     DB_FILE = BASE_DIR.joinpath('application.db').absolute()
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_FILE}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class ProductionConfig(Config):
-    SECRET_KEY = os.environ.get("SECRET_KEY")
+    SECRET_KEY = os.environ.get("SECRET_KEY") or 'hard to guess string' # TODO Remove
 
-    #if not SECRET_KEY:
-    #    raise ValueError("No SECRET_KEY set for Flask application")
+    if not SECRET_KEY:
+        raise ValueError("No SECRET_KEY set for Flask application")
 
 
 class DevelopmentConfig(Config):
