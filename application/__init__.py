@@ -3,15 +3,14 @@ from flask_migrate import Migrate
 
 from config import Config
 
+app = Flask(__name__)
+
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
     app.config.from_object(config_class)
-
-    with app.app_context():
-        from . import routes, forms
-        from .models import db
-        db.init_app(app)
-        migrate = Migrate()
-        migrate.init_app(app, db)
+    from . import routes, forms
+    from . models import db
+    db.init_app(app)
+    migrate = Migrate()
+    migrate.init_app(app, db)
     return app

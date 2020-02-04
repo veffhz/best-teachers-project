@@ -1,6 +1,6 @@
 from werkzeug import exceptions
 from flask import render_template, request
-from flask import current_app as app
+from application import app
 
 from application.models import db
 from application.models import Teacher, Booking, Request
