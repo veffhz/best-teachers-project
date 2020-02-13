@@ -1,11 +1,10 @@
 from werkzeug import exceptions
 from flask import render_template, request
-from application import app
 
+from application import app
 from application.models import db
 from application.models import Teacher, Booking, Request
 from application.forms import BookingForm, RequestForm
-
 from application.data_helper import goals, days_of_week
 from application.data_helper import grouped_by_hours
 
