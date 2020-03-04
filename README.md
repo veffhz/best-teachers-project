@@ -16,6 +16,7 @@
 
 ##### create and fill db 
 `flask db upgrade`
+
 `python migrate_to_db.py`
 
 ##### run app:

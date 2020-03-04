@@ -26,6 +26,11 @@ goals = OrderedDict({
 
 
 def grouped_by_hours(days):
+    """
+    Grouped teacher's schedule to dict {hour: is_accessible}
+    :param days:
+    :return: dict
+    """
     by_hours = defaultdict(dict)
     for day_of_week in days_of_week.keys():
         for hour, is_accessible in days[day_of_week].items():

@@ -6,6 +6,9 @@ from application.data_helper import goals
 
 
 class BookingForm(FlaskForm):
+    """
+    Form for booking lesson from teacher
+    """
     name = StringField(validators=[InputRequired()])
     phone = StringField(validators=[InputRequired()])
     day = HiddenField('day')
@@ -15,6 +18,9 @@ class BookingForm(FlaskForm):
 
 
 class RequestForm(FlaskForm):
+    """
+    Form for request phone call back
+    """
     name = StringField(validators=[InputRequired()])
     phone = StringField(validators=[InputRequired()])
     goal = RadioField(choices=[(goal_code, goal['desc'].capitalize())

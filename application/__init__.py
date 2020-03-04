@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 def create_app(config_class=Config):
     app.config.from_object(config_class)
-    from . import routes, forms
-    from . models import db
+    from application import routes, forms
+    from application.models import db
     db.init_app(app)
     migrate = Migrate()
     migrate.init_app(app, db)

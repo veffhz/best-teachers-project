@@ -509,20 +509,14 @@ teachers = [
 
 
 def run():
+    """
+    Add test data to db.
+    """
     app = create_app()
     app.app_context().push()
 
     for teacher_dict in teachers:
-        id = teacher_dict['id']
-        name = teacher_dict['name']
-        about = teacher_dict['about']
-        picture = teacher_dict['picture']
-        rating = float(teacher_dict['rating'])
-        price = teacher_dict['price']
-        goals = teacher_dict['goals']
-        free = teacher_dict['free']
-
-        teacher = Teacher(id =id, name=name, about=about, picture=picture, rating=rating, price=price, goals=goals, free=free)
+        teacher = Teacher(**teacher_dict)
         db.session.add(teacher)
 
     db.session.commit()
