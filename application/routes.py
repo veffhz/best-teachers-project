@@ -85,8 +85,8 @@ def send_request():
     form.populate_obj(new_request)
     db.session.add(new_request)
     db.session.commit()
-    new_request.goal = goals[new_request.goal]['desc']
-    return render_template('request_done.html', request_data=new_request)
+    return render_template('request_done.html', request_data=new_request,
+                           goals=goals)
 
 
 @app.route('/booking/<int:teacher_id>/')

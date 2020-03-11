@@ -12,10 +12,8 @@ class Config:
 
 
 class ProductionConfig(Config):
-    SECRET_KEY = os.environ.get("SECRET_KEY") or 'hard to guess string' # TODO Remove
-
-    if not SECRET_KEY:
-        raise ValueError("No SECRET_KEY set for Flask application")
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class DevelopmentConfig(Config):

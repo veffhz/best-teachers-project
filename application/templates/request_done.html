@@ -1,7 +1,7 @@
 {% extends 'base_done.html' %}
 
 {% block card %}
-    <p><b>Цель занятий:</b> {{ request_data.goal }}</p>
+    <p><b>Цель занятий:</b> {{ goals[request_data.goal]['desc'] }}</p>
     <p><b>Времени есть:</b> {{ request_data.time }} часа в неделю</p>
     <p><b>Имя:</b> {{ request_data.name }}</p>
     <p><b>Телефон:</b> {{ request_data.phone }}</p>
