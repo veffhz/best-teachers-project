@@ -1,4 +1,6 @@
-## best teachers project with Flask
+Best teachers project with Flask
+==================
+[![Heroku](https://heroku-badge.herokuapp.com/?app=best-teachers-project&style=flat)](https://best-teachers-project.herokuapp.com)
 
 ##### features:
  - index page for show random 6 teachers
