@@ -38,7 +38,7 @@ class Booking(db.Model):
     __tablename__ = 'bookings'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
     day = db.Column(db.String(15), nullable=False)
     hour = db.Column(db.String(15), nullable=False)
     teacher_id = db.Column(db.Integer, db.ForeignKey("teachers.id"))
@@ -49,6 +49,6 @@ class Request(db.Model):
     __tablename__ = 'requests'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
     goal = db.Column(db.String(15), nullable=False)
     time = db.Column(db.String(15), nullable=False)
